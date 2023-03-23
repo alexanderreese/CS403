@@ -25,4 +25,17 @@ private:
          
 };
 
+class Sphere : public Shape {
+public:
+    //Shape(const std::string&);
+    ~Sphere() = default; // compiler generates virtual destructor
+
+    double getArea() const = 0; // get the surface area          
+    double getVolume() const = 0; // get the volume          
+    bool test(const std::vector<std::string>& cond) const = 0; // test if the conditions are statisfied
+
+    std::string getInfo() const = 0; // get all the info in a string
+
+};
+
 #endif
