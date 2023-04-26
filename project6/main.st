@@ -9,7 +9,21 @@ boxDict := Dictionary new.
 cylinderDict := Dictionary new.
 torusDict := Dictionary new.
 
-dataFile := FileStream open: 'shapes.dat' mode: #read.
+argSize := (Smalltalk arguments size).
+(argSize < 1) ifTrue: [
+    Transcript show: 'Incorrect number of arguments.'; cr.
+    ObjectMemory quit.
+].
+
+fileName := Smalltalk arguments first.
+(File exists: fileName) ifTrue: [
+    dataFile := FileStream open: fileName mode: #read.
+] ifFalse: [
+    Transcript show: 'Unable to open '.
+    Transcript show: fileName.
+    Transcript show: ' for reading'; cr.
+    ObjectMemory quit.
+].
 
 [dataFile atEnd] whileFalse: [
     | line tokenizer shapeName shapeType |
