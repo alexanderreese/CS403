@@ -1,0 +1,25 @@
+% Rules for calculating pay for salaried employees
+pay(First, Last, Pay) :-
+  salaried(First, Last, Salary),
+  Pay is Salary.
+
+% Rules for calculating pay for hourly employees
+pay(First, Last, Pay) :-
+  hourly(First, Last, Hours, Rate),
+  (Hours =< 40 ->
+    Pay is Hours * Rate
+  ; Hours > 40, Hours =< 50 ->
+    Pay is 40 * Rate + (Hours - 40) * (Rate * 1.5)
+  ;
+    Pay is 40 * Rate + 10 * (Rate * 1.5) + (Hours - 50) * (Rate * 2)
+  ).
+
+% Rules for calculating pay for commission employees
+pay(First, Last, Pay) :-
+  commission(First, Last, MinSalary, Sales, CommissionRate),
+  Commission is Sales * CommissionRate,
+  (Commission < MinSalary ->
+    Pay is MinSalary
+  ;
+    Pay is Commission
+  ).

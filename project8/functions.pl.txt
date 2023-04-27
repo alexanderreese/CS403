@@ -1,0 +1,39 @@
+% Predicate for checking whether a sublist of employees satisfies a condition on Pay
+list(Op, Ref, List) :-
+    findall(First-Last, pay(First, Last, Pay), Employees),
+    filter_list(Op, Ref, Employees, List).
+
+% Predicate for checking whether Count is the number of employees in a sublist
+count(Op, Ref, Count) :-
+    list(Op, Ref, List),
+    length(List, Count).
+
+% Predicate for checking whether Min is the minimum pay in a sublist
+min(Op, Ref, Min) :-
+    list(Op, Ref, List),
+    map_list_to_pairs(pay, List, Pairs),
+    pairs_values(Pairs, Pays),
+    min_list(Pays, Min).
+
+% Predicate for checking whether Max is the maximum pay in a sublist
+max(Op, Ref, Max) :-
+    list(Op, Ref, List),
+    map_list_to_pairs(pay, List, Pairs),
+    pairs_values(Pairs, Pays),
+    max_list(Pays, Max).
+
+% Predicate for checking whether Total is the total pay in a sublist
+total(Op, Ref, Total) :-
+    list(Op, Ref, List),
+    map_list_to_pairs(pay, List, Pairs),
+    pairs_values(Pairs, Pays),
+    sum_list(Pays, Total).
+
+% Predicate for checking whether Avg is the average pay in a sublist
+avg(Op, Ref, Avg) :-
+    list(Op, Ref, List),
+    map_list_to_pairs(pay, List, Pairs),
+    pairs_values(Pairs, Pays),
+    sum_list(Pays, Sum),
+    length(Pays, Count),
+    Avg is Sum / Count.
